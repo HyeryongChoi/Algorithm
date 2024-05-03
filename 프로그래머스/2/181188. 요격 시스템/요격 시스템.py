@@ -1,20 +1,11 @@
 def solution(targets):
-    answer = 1
+    answer = 0
+    targets.sort(key = lambda x: [x[1], x[0]])
     
-    # 폭격 미사일을 시작 좌표 기준 오름차순 정렬하기
-    targets.sort(key = lambda x: (x[0], x[1]))
-    
-    # 요격 미사일 범위를 좁혀 나가기
-    s, e = 0, 1e8
-    for start, end in targets:
-        if s <= start < e: 
-            s = start
-            if end < e: e = end
-        
-        else:
+    prev_e = 0
+    for cur_s, cur_e in targets:
+        if cur_s >= prev_e: # 현재 요격 범위를 벗어난 다면 요격 미사일 추가
             answer += 1
-            s, e = start, end
-    
-    print(s,e)
+            prev_e = cur_e
+
     return answer
-    
