@@ -1,6 +1,6 @@
 from collections import defaultdict
 
-def dfs(row, n, visited, result):
+def dfs(row, n, visited):
     global answer
 
     if row == n:
@@ -16,7 +16,7 @@ def dfs(row, n, visited, result):
         visited[(2, row+col)] = True
         visited[(3, row-col)] = True
 
-        dfs(row+1, n, visited, result + [(row,col)])
+        dfs(row+1, n, visited)
 
         visited[(1, col)] = False
         visited[(2, row+col)] = False
@@ -30,13 +30,13 @@ if __name__ == '__main__':
 
         # nxn 보드에 n개의 퀸을 서로 다른 두 퀸이 공격하지 못하게 놓는 경우의 수?
         # 0 같은 가로 줄 -> 미리 가로줄 선택
-        # 1 같은 세로 줄 -> (1, c)
+        # 1 같은 세로 줄 -> (1, col)
         # 2 같은 오른쪽 위 대각선 -> 행, 열 좌표 합이 같다 (2, sum)
-        # 3 같은 오른쪽 아래 대각선 -> 행, 열 좌표 차가 같다 (2, difference)
+        # 3 같은 오른쪽 아래 대각선 -> 행, 열 좌표 차가 같다 (3, difference)
 
         visited = defaultdict(bool)
 
         # row일 때, col 고르기
-        dfs(0, n, visited, [])
+        dfs(0, n, visited)
 
         print(f'#{test_case} {answer}')
