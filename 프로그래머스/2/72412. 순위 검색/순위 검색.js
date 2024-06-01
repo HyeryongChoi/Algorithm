@@ -1,14 +1,18 @@
 const binarySearch = (targetScore, infoScores) => { // 타겟 점수가 몇번째 인덱스에 있을지 찾기
-    let [start, end] = [0, infoScores.length];
+    let [start, end] = [0, infoScores.length-1];
+    let mid = Math.floor((start+end) / 2);
     
-    while (start < end) {
-        const mid = Math.floor((start+end) / 2);
+    while (start <= end) {
+        const score = infoScores[mid];
         
-        if (infoScores[mid] >= targetScore) end = mid;
-        else start = mid + 1;
+        if (score === targetScore) return mid;
+        else if (score < targetScore) start = mid + 1;
+        else end = mid - 1;
+        
+        mid = Math.floor((start+end) / 2);
     }
     
-    return start;
+    return mid + 1;
 };
 
 function solution(rawInfos, rawQueries) {
@@ -27,7 +31,7 @@ function solution(rawInfos, rawQueries) {
     });
     
     // 이분탐색을 위해 점수 오름차순 정렬
-    for(const key in infos) infos[key].sort((a,b) => a-b);
+    for(const key in infos) infos[key] = infos[key].sort((a,b) => a-b);
     
     rawQueries
         .map(rawQuery => rawQuery.replaceAll('and ','').split(' ').filter(v => v !== '-')) // 쿼리파싱
@@ -35,9 +39,9 @@ function solution(rawInfos, rawQueries) {
             const targetScore = Math.floor(query.pop());
             const infoConditions = Object.keys(infos);
 
-            // 조건 만족하는 info 중에서 코테 점수가 기준 점수 이상인 것의 개수
+            // 조건 만족하는 info 중에서 코테 점수가 기준 점수 이상인 것의 개
             const count = infoConditions
-                .filter(infoCondition => query.every(q => infoCondition.includes(q))) 
+                .filter(infoCondition => query.every(condition => infoCondition.includes(condition))) 
                 .reduce((acc, key) => acc + infos[key].length - binarySearch(targetScore, infos[key]), 0);
 
             answer.push(count);
