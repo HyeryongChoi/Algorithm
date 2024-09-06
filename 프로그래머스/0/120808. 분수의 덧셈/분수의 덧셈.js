@@ -13,13 +13,5 @@ function solution(numer1, denom1, numer2, denom2) {
 }
 
 function getGCD(num1, num2) {
-    let gcd = 1;
-    
-    if(num1 > num2) [num1, num2] = [num2, num1];
-    
-    for(let i = 2; i <= num1; i++) {
-        if (num1 % i === 0 && num2 % i === 0) gcd = i;
-    }
-    
-    return gcd;
+    return num1 % num2 ? getGCD(num2, num1%num2) : num2;
 }
