@@ -7,28 +7,19 @@
 var exist = function(board, word) {
     const dy = [-1, 1, 0, 0];
     const dx = [0, 0, -1, 1];  
-    const startPosList = [];
     let answer = false;
 
-    for(let i = 0; i < board.length; i++) {
-        for(let j = 0; j < board[0].length; j++){
-            if(board[i][j] === word[0]) startPosList.push([i,j]);
+    const visited = Array.from({length: board.length}, ()=>Array(board[0].length).fill(false));
+
+    for(let y = 0; y < board.length; y++) {
+        for(let x = 0; x < board[0].length; x++) {
+            visited[y][x] = true;
+            dfs([y,x], board[y][x], visited);
+            visited[y][x] = false;
+
+            if(answer) return true;
         }
-    }
-
-    if(word.length === 1) {
-        if(startPosList.length > 0) return true;
-        return false;
-    }
-
-    for(let now of startPosList) {
-        const visited = Array.from({length: board.length}, ()=>Array(board[0].length).fill(false));
-        
-        visited[now[0]][now[1]] = true;
-        dfs(now, word[0], visited);
-
-        if(answer) return true;
-    }
+    } 
 
     return answer;
 
