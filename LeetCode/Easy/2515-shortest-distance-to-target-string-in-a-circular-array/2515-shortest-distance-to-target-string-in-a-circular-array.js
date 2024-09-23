@@ -6,13 +6,17 @@
  */
 var closetTarget = function(words, target, startIndex) {
     const n = words.length;
-    let distance = n;
+    const STEP = 1;
+    let distance = 0;
+    let [left, right] = [startIndex, startIndex];
 
-    for(let i = 0; i < n; i++) {
-        if(words[(startIndex+i) % n] === target) {
-            distance = Math.min(distance, Math.min(i, n-i));
-        }
+    while (distance < n) {
+        if(words[left] === target || words[right] === target) return distance;
+
+        left = (left - STEP + n) % n;
+        right = (right + STEP) % n;
+        distance += 1;
     }
 
-    return distance === n ? -1 : distance;
+    return -1;
 };
