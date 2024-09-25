@@ -4,21 +4,15 @@
  * @return {boolean}
  */
 var isPrefixString = function(s, words) {
-    let index = 0;
+    let concatenated = '';
 
     if(words.join('').length < s.length) return false;
 
     for(let word of words) {
-        if(index >= s.length) break;
-        if(index + word.length - 1 >= s.length) return false;
+        concatenated += word;
 
-        if(word === s.slice(index, index+word.length)) {
-            console.log(word, s.slice(index, index+word.length));
-            index = index + word.length;
-            continue;
-        }
-
-        return false;
+        if(s.slice(0, concatenated.length) !== concatenated) return false;
+        if(s.length === concatenated.length) break;
     }
 
     return true;
