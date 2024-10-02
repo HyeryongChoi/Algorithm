@@ -4,21 +4,21 @@
  * @return {boolean}
  */
 var isAnagram = function(s, t) {
+    const sCount = {};
+    const tCount = {};
+
     if(s.length !== t.length) return false;
 
-    let countS = {};
-    let countT = {};
-
-    s.split('').forEach(data => {
-        countS[data] = (countS[data] || 0) + 1;
+    s.split('').forEach(letter => {
+        sCount[letter] = (sCount[letter] || 0) + 1;
     });
 
-    t.split('').forEach(data => {
-        countT[data] = (countT[data] || 0) + 1;
+    t.split('').forEach(letter => {
+        tCount[letter] = (tCount[letter] || 0) + 1;
     });
 
-    for(let key in countS) {
-        if(countS[key] !== countT[key]) return false;
+    for(let [letter, count] of Object.entries(sCount)) {
+        if(count !== tCount[letter]) return false;
     }
 
     return true;
