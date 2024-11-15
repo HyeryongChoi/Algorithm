@@ -15,7 +15,7 @@ var maxDepth = function(root) {
 
     const search = (start, depth) => {
         if(!start) return;
-        
+
         if(start.left) search(start.left, depth + 1);
         if(start.right) search(start.right, depth + 1);
 
@@ -24,5 +24,5 @@ var maxDepth = function(root) {
 
     search(root, maxDepth);
 
-    return maxDepth;
+    return root ? maxDepth : 0;
 };
