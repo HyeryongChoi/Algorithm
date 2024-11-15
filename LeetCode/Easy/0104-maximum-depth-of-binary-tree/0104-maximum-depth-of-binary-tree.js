@@ -11,18 +11,7 @@
  * @return {number}
  */
 var maxDepth = function(root) {
-    let maxDepth = 1;
+    if(!root) return 0;
 
-    const search = (start, depth) => {
-        if(!start) return;
-
-        if(start.left) search(start.left, depth + 1);
-        if(start.right) search(start.right, depth + 1);
-
-        maxDepth = Math.max(maxDepth, depth);
-    };
-
-    search(root, maxDepth);
-
-    return root ? maxDepth : 0;
+    return Math.max(maxDepth(root.left), maxDepth(root.right)) + 1 ;
 };
